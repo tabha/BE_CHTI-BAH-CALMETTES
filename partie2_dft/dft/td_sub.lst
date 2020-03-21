@@ -1,0 +1,85 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; ce programme est pour l'assembleur RealView (Keil)
+    2 00000000                 thumb
+    3 00000000                 area             moncode, code, readonly
+    4 00000000                 export           angle       ;
+    5 00000000                 import           TabSin
+    6 00000000                 import           TabCos
+    7 00000000         angle   proc
+    8 00000000 B402            push             {r1}
+    9 00000002 4907            ldr              r1, =TabSin
+   10 00000004 4A07            ldr              r2, =TabCos
+   11 00000006 F931 3010       ldrsh            r3,[r1,r0, lsl #0x01]
+   12 0000000A F932 C010       ldrsh            r12,[r2,r0, lsl #0x01]
+   13 0000000E         
+   14 0000000E FB03 F303       mul              r3,r3
+   15 00000012 FB0C FC0C       mul              r12,r12
+   16 00000016         
+   17 00000016 4463            add              r3,r12
+   18 00000018         
+   19 00000018 BC02            pop              {r1}
+   20 0000001A 600B            str              r3, [r1]
+   21 0000001C 4770            bx               lr
+   22 0000001E                 endp
+   23 0000001E                 end
+              00 00 00000000 
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\td_sub.d -o.\td_sub.o -I.\RTE\_Target_1 -ID:\Pierre-rog\AppData\
+Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include -ID:\Pierre-rog\AppData\Loca
+l\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include --predefine="__EVAL SETA 1"
+ --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 529" --pre
+define="_RTE_ SETA 1" --predefine="STM32F10X_MD SETA 1" --list=.\td_sub.lst td_
+sub.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+angle 00000000
+
+Symbol: angle
+   Definitions
+      At line 7 in file td_sub.s
+   Uses
+      At line 4 in file td_sub.s
+Comment: angle used once
+moncode 00000000
+
+Symbol: moncode
+   Definitions
+      At line 3 in file td_sub.s
+   Uses
+      None
+Comment: moncode unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+TabCos 00000000
+
+Symbol: TabCos
+   Definitions
+      At line 6 in file td_sub.s
+   Uses
+      At line 10 in file td_sub.s
+Comment: TabCos used once
+TabSin 00000000
+
+Symbol: TabSin
+   Definitions
+      At line 5 in file td_sub.s
+   Uses
+      At line 9 in file td_sub.s
+Comment: TabSin used once
+2 symbols
+341 symbols in table
