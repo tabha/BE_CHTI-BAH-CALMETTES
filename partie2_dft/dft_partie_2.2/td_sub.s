@@ -9,7 +9,7 @@
 
 module	proc
 	push	{lr}
-	push	{r0,r1,r4-r7}
+	push	{r0,r1,r4-r5}
 	;r0 : tabSig    r1: k
 	
 	;appel de calculk avec cos
@@ -31,7 +31,7 @@ module	proc
 	smull	r5,r4,r3,r3
 	SMLAL	r5,r4,r2,r2
 	mov		r0,r4
-	pop		{r4-r7}
+	pop		{r4-r5}
 	pop		{LR}
 	BX		LR
 	endp
@@ -40,16 +40,16 @@ module	proc
 calculk	proc
 	
 	; r0 = tabSig    r1 : k   r2 : tabCos ou TaSig
-	push	{r4-r7}
+	push	{r4-r6}
 	mov		r12, #0x00  ; i=0
 	b		loop
 	
 loop
 	;calcul ik
-	mul		r7,r1,r12
-	AND		r7, #0x03F   ;modulo 64
+	mul		r5,r1,r12
+	AND		r5, #0x03F   ;modulo 64
 	
-	ldrsh	r4,[r2,r7, lsl #0x01]   ;cos(ik) ou sin(ik)
+	ldrsh	r4,[r2,r5, lsl #0x01]   ;cos(ik) ou sin(ik)
 	ldrsh	r5,[r0,r12, lsl #0x01]   ;x(i)
 	
 	mul		r4,r4,r5	;cos(ik)x(i) ou sin(ik)x(i)
@@ -66,7 +66,7 @@ loop
 	mov		r0,r6
 	b 		fin
 fin
-	pop		{r4-r7}
+	pop		{r4-r6}
 	BX		LR
 	
 	endp

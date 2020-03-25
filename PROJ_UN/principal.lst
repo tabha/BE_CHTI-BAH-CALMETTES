@@ -1,0 +1,140 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 thumb
+    2 00000000         
+    3 00000000                 area             mesdata, data, readwrite ;
+    4 00000000 00000000 
+                       FLAG    DCD              0           ; intialisation d'u
+                                                            n flag
+    5 00000004         
+    6 00000004         
+    7 00000004                 area             moncode, code, readonly
+    8 00000000                 export           timer_callback
+    9 00000000         
+   10 00000000 40010C10 
+                       GPIOB_BSRR
+                               equ              0x40010C10  ; Bit Set/Reset reg
+                                                            ister
+   11 00000000         
+   12 00000000         
+   13 00000000         timer_callback
+                               proc
+   14 00000000 4809            ldr              r0, =FLAG
+   15 00000002 6802            ldr              r2, [r0]
+   16 00000004 B102            cbz              r2, si_alors ; si r2 = 0 aller 
+                                                            au else
+   17 00000006 B93A            cbnz             r2, sinon   ; si r2 = 1 aller a
+                                                            u if
+   18 00000008         si_alors
+   19 00000008         ; mise a 1 de PB1
+   20 00000008 4B08            ldr              r3, =GPIOB_BSRR
+   21 0000000A F04F 0102       mov              r1, #0x00000002
+   22 0000000E 6019            str              r1, [r3]
+   23 00000010 F04F 0201       mov              r2, #0x1
+   24 00000014 6002            str              r2, [r0]
+   25 00000016 4770            bx               lr
+   26 00000018         
+   27 00000018         sinon
+   28 00000018         ; mise a 0 de PB1
+   29 00000018 4B04            ldr              r3, =GPIOB_BSRR
+   30 0000001A F44F 3100       mov              r1, #0x00020000
+   31 0000001E 6019            str              r1, [r3]
+   32 00000020 F04F 0200       mov              r2, #0x0
+   33 00000024 6002            str              r2, [r0]
+   34 00000026 4770            bx               lr
+   35 00000028         ; N.B. le registre BSRR est write-only, on ne peut pas l
+                       e relire
+   36 00000028                 endp
+   37 00000028                 end
+              00000000 
+              40010C10 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\obj\principal_1.d -o.\obj\principal_1.o -I.\RTE\_Simu -ID:\Pierr
+e-rog\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include -ID:\Pierre-ro
+g\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include --predefine="
+__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION S
+ETA 529" --predefine="_RTE_ SETA 1" --predefine="STM32F10X_MD SETA 1" --list=pr
+incipal.lst principal.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+FLAG 00000000
+
+Symbol: FLAG
+   Definitions
+      At line 4 in file principal.s
+   Uses
+      At line 14 in file principal.s
+Comment: FLAG used once
+mesdata 00000000
+
+Symbol: mesdata
+   Definitions
+      At line 3 in file principal.s
+   Uses
+      None
+Comment: mesdata unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+moncode 00000000
+
+Symbol: moncode
+   Definitions
+      At line 7 in file principal.s
+   Uses
+      None
+Comment: moncode unused
+si_alors 00000008
+
+Symbol: si_alors
+   Definitions
+      At line 18 in file principal.s
+   Uses
+      At line 16 in file principal.s
+Comment: si_alors used once
+sinon 00000018
+
+Symbol: sinon
+   Definitions
+      At line 27 in file principal.s
+   Uses
+      At line 17 in file principal.s
+Comment: sinon used once
+timer_callback 00000000
+
+Symbol: timer_callback
+   Definitions
+      At line 13 in file principal.s
+   Uses
+      At line 8 in file principal.s
+Comment: timer_callback used once
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+GPIOB_BSRR 40010C10
+
+Symbol: GPIOB_BSRR
+   Definitions
+      At line 10 in file principal.s
+   Uses
+      At line 20 in file principal.s
+      At line 29 in file principal.s
+
+1 symbol
+344 symbols in table

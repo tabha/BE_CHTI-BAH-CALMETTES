@@ -15,7 +15,7 @@ ARM Macro Assembler    Page 1
     9 00000000         
    10 00000000         module  proc
    11 00000000 B500            push             {lr}
-   12 00000002 B4F3            push             {r0,r1,r4-r7}
+   12 00000002 B433            push             {r0,r1,r4-r5}
    13 00000004         ;r0 : tabSig    r1: k
    14 00000004         
    15 00000004         ;appel de calculk avec cos
@@ -37,7 +37,7 @@ ARM Macro Assembler    Page 1
    31 0000001A FB83 5403       smull            r5,r4,r3,r3
    32 0000001E FBC2 5402       SMLAL            r5,r4,r2,r2
    33 00000022 4620            mov              r0,r4
-   34 00000024 BCF0            pop              {r4-r7}
+   34 00000024 BC30            pop              {r4-r5}
    35 00000026 F85D EB04       pop              {LR}
    36 0000002A 4770            BX               LR
    37 0000002C                 endp
@@ -46,16 +46,16 @@ ARM Macro Assembler    Page 1
    40 0000002C         calculk proc
    41 0000002C         
    42 0000002C         ; r0 = tabSig    r1 : k   r2 : tabCos ou TaSig
-   43 0000002C B4F0            push             {r4-r7}
+   43 0000002C B470            push             {r4-r6}
    44 0000002E F04F 0C00       mov              r12, #0x00  ; i=0
    45 00000032 E7FF            b                loop
    46 00000034         
    47 00000034         loop
    48 00000034         ;calcul ik
-   49 00000034 FB01 F70C       mul              r7,r1,r12
-   50 00000038 F007 073F       AND              r7, #0x03F  ;modulo 64
+   49 00000034 FB01 F50C       mul              r5,r1,r12
+   50 00000038 F005 053F       AND              r5, #0x03F  ;modulo 64
    51 0000003C         
-   52 0000003C F932 4017       ldrsh            r4,[r2,r7, lsl #0x01] 
+   52 0000003C F932 4015       ldrsh            r4,[r2,r5, lsl #0x01] 
                                                             ;cos(ik) ou sin(ik)
                                                             
    53 00000040 F930 501C       ldrsh            r5,[r0,r12, lsl #0x01] ;x(i)
@@ -81,7 +81,7 @@ ARM Macro Assembler    Page 2
    66 00000054 4630            mov              r0,r6
    67 00000056 E7FF            b                fin
    68 00000058         fin
-   69 00000058 BCF0            pop              {r4-r7}
+   69 00000058 BC70            pop              {r4-r6}
    70 0000005A 4770            BX               LR
    71 0000005C         
    72 0000005C                 endp
