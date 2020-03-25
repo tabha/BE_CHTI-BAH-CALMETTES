@@ -2,11 +2,45 @@
 	thumb
 	area  moncode, code, readonly
 	export	calculk;
-		
+	export	module
+	import 	TabCos
+	import	TabSin
+
+
+module	proc
+	push	{lr}
+	push	{r0,r1,r4-r7}
+	;r0 : tabSig    r1: k
+	
+	;appel de calculk avec cos
+	
+	ldr		r2,=TabCos
+	
+	BL		calculk
+	mov		r3,r0
+	pop		{r0,r1}
+	push	{r3}
+	ldr		r2,=TabSin
+	
+	BL		calculk
+	
+	mov		r2,r0
+	
+	pop		{r3}
+	
+	smull	r5,r4,r3,r3
+	smull	r7,r6,r2,r2
+	add		r4,r6
+	mov		r0,r4
+	pop		{r4-r7}
+	pop		{LR}
+	BX		LR
+	endp
+	
+
 calculk	proc
 	
 	; r0 = tabSig    r1 : k   r2 : tabCos ou TaSig
-	push	{lr}
 	push	{r4-r7}
 	mov		r12, #0x00  ; i=0
 	b		loop
@@ -34,7 +68,7 @@ loop
 	b 		fin
 fin
 	pop		{r4-r7}
-	pop		{pc}
+	BX		LR
 	
 	endp
 	end

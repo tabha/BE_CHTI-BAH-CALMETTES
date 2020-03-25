@@ -8,48 +8,46 @@ ARM Macro Assembler    Page 1
     2 00000000                 thumb
     3 00000000                 area             moncode, code, readonly
     4 00000000                 export           calculReelk ;
-    5 00000000                 import           TabSin
-    6 00000000                 import           TabCos
-    7 00000000                 import           TabSig
-    8 00000000         calculReelk
+    5 00000000         
+    6 00000000         calculReelk
                                proc
-    9 00000000         
-   10 00000000         ; r0 = k    r1 : addr de retour du tableau
-   11 00000000 B4F0            push             {r4-r7}
-   12 00000002 F04F 0C00       mov              r12, #0x00  ; i=0
-   13 00000006 4B0B            ldr              r3, =TabCos
-   14 00000008 4A0B            ldr              r2, =TabSig
-   15 0000000A E7FF            b                loop
-   16 0000000C         
-   17 0000000C         loop
-   18 0000000C         ;calcul ik
-   19 0000000C FB00 F70C       mul              r7,r0,r12
-   20 00000010 F007 073F       AND              r7, #0x03F  ;modulo 64
-   21 00000014         
-   22 00000014 F933 4017       ldrsh            r4,[r3,r7, lsl #0x01] ;cos(ik)
-   23 00000018 F932 501C       ldrsh            r5,[r2,r12, lsl #0x01] ;x(i)
-   24 0000001C         
-   25 0000001C FB04 F405       mul              r4,r4,r5    ;cos(ik)x(i)
-   26 00000020         
-   27 00000020 4426            add              r6,r4
-   28 00000022         
-   29 00000022 F10C 0C01       add              r12,#0x01
-   30 00000026         
-   31 00000026 F1BC 0F40       cmp              r12,#64
-   32 0000002A D1EF            bne              loop
-   33 0000002C         
-   34 0000002C         ; on quittz la boucle
-   35 0000002C         
-   36 0000002C 600E            str              r6,[r1]
-   37 0000002E E7FF            b                fin
-   38 00000030         fin
-   39 00000030 BCF0            pop              {r4-r7}
-   40 00000032 4770            bx               lr
-   41 00000034         
-   42 00000034                 endp
-   43 00000034                 end
-              00000000 
-              00000000 
+    7 00000000         
+    8 00000000         ; r0 = tabSig    r1 : k   r2 : tabCos ou TaSig
+    9 00000000 B500            push             {lr}
+   10 00000002 B4F0            push             {r4-r7}
+   11 00000004 F04F 0C00       mov              r12, #0x00  ; i=0
+   12 00000008 E7FF            b                loop
+   13 0000000A         
+   14 0000000A         loop
+   15 0000000A         ;calcul ik
+   16 0000000A FB01 F70C       mul              r7,r1,r12
+   17 0000000E F007 073F       AND              r7, #0x03F  ;modulo 64
+   18 00000012         
+   19 00000012 F932 4017       ldrsh            r4,[r2,r7, lsl #0x01] 
+                                                            ;cos(ik) ou sin(ik)
+                                                            
+   20 00000016 F930 501C       ldrsh            r5,[r0,r12, lsl #0x01] ;x(i)
+   21 0000001A         
+   22 0000001A FB04 F405       mul              r4,r4,r5    ;cos(ik)x(i) ou sin
+                                                            (ik)x(i)
+   23 0000001E         
+   24 0000001E 4426            add              r6,r4
+   25 00000020         
+   26 00000020 F10C 0C01       add              r12,#0x01
+   27 00000024         
+   28 00000024 F1BC 0F40       cmp              r12,#64
+   29 00000028 D1EF            bne              loop
+   30 0000002A         
+   31 0000002A         ; on quitte la boucle
+   32 0000002A         
+   33 0000002A 4630            mov              r0,r6
+   34 0000002C E7FF            b                fin
+   35 0000002E         fin
+   36 0000002E BCF0            pop              {r4-r7}
+   37 00000030 BD00            pop              {pc}
+   38 00000032         
+   39 00000032                 endp
+   40 00000032                 end
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\td_sub.d -o.\td_sub.o -I.\RTE\_Target_1 -ID:\Pierre-rog\AppData\
 Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include -ID:\Pierre-rog\AppData\Loca
@@ -67,26 +65,26 @@ calculReelk 00000000
 
 Symbol: calculReelk
    Definitions
-      At line 8 in file td_sub.s
+      At line 6 in file td_sub.s
    Uses
       At line 4 in file td_sub.s
 Comment: calculReelk used once
-fin 00000030
+fin 0000002E
 
 Symbol: fin
    Definitions
-      At line 38 in file td_sub.s
+      At line 35 in file td_sub.s
    Uses
-      At line 37 in file td_sub.s
+      At line 34 in file td_sub.s
 Comment: fin used once
-loop 0000000C
+loop 0000000A
 
 Symbol: loop
    Definitions
-      At line 17 in file td_sub.s
+      At line 14 in file td_sub.s
    Uses
-      At line 15 in file td_sub.s
-      At line 32 in file td_sub.s
+      At line 12 in file td_sub.s
+      At line 29 in file td_sub.s
 
 moncode 00000000
 
@@ -97,35 +95,4 @@ Symbol: moncode
       None
 Comment: moncode unused
 4 symbols
-
-
-
-ARM Macro Assembler    Page 1 Alphabetic symbol ordering
-External symbols
-
-TabCos 00000000
-
-Symbol: TabCos
-   Definitions
-      At line 6 in file td_sub.s
-   Uses
-      At line 13 in file td_sub.s
-Comment: TabCos used once
-TabSig 00000000
-
-Symbol: TabSig
-   Definitions
-      At line 7 in file td_sub.s
-   Uses
-      At line 14 in file td_sub.s
-Comment: TabSig used once
-TabSin 00000000
-
-Symbol: TabSin
-   Definitions
-      At line 5 in file td_sub.s
-   Uses
-      None
-Comment: TabSin unused
-3 symbols
-344 symbols in table
+339 symbols in table
