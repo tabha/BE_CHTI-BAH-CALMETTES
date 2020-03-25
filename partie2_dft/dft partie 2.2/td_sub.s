@@ -29,8 +29,7 @@ module	proc
 	pop		{r3}
 	
 	smull	r5,r4,r3,r3
-	smull	r7,r6,r2,r2
-	add		r4,r6
+	SMLAL	r5,r4,r2,r2
 	mov		r0,r4
 	pop		{r4-r7}
 	pop		{LR}

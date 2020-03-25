@@ -83,9 +83,9 @@ Image Symbol Table
     i.__scatterload_copy                     0x080001b0   Section       14  handlers.o(i.__scatterload_copy)
     i.__scatterload_null                     0x080001be   Section        2  handlers.o(i.__scatterload_null)
     i.__scatterload_zeroinit                 0x080001c0   Section       14  handlers.o(i.__scatterload_zeroinit)
-    moncode                                  0x080001d0   Section      104  td_sub.o(moncode)
-    Signal                                   0x08000258   Section      128  signal.o(Signal)
-    Trigo                                    0x080002d8   Section      256  trigo.o(Trigo)
+    moncode                                  0x080001d0   Section      100  td_sub.o(moncode)
+    Signal                                   0x08000254   Section      128  signal.o(Signal)
+    Trigo                                    0x080002d4   Section      256  trigo.o(Trigo)
     .data                                    0x20000000   Section        4  main.o(.data)
     .bss                                     0x20000004   Section      256  main.o(.bss)
     STACK                                    0x20000108   Section     1024  startup-rvds.o(STACK)
@@ -173,13 +173,13 @@ Image Symbol Table
     __scatterload_copy                       0x080001b1   Thumb Code    14  handlers.o(i.__scatterload_copy)
     __scatterload_null                       0x080001bf   Thumb Code     2  handlers.o(i.__scatterload_null)
     __scatterload_zeroinit                   0x080001c1   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    module                                   0x080001d1   Thumb Code    46  td_sub.o(moncode)
-    calculk                                  0x080001ff   Thumb Code    48  td_sub.o(moncode)
-    Region$$Table$$Base                      0x08000238   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08000258   Number         0  anon$$obj.o(Region$$Table)
-    TabSig                                   0x08000258   Data           0  signal.o(Signal)
-    TabCos                                   0x080002d8   Data           0  trigo.o(Trigo)
-    TabSin                                   0x08000358   Data           0  trigo.o(Trigo)
+    module                                   0x080001d1   Thumb Code    44  td_sub.o(moncode)
+    calculk                                  0x080001fd   Thumb Code    48  td_sub.o(moncode)
+    Region$$Table$$Base                      0x08000234   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08000254   Number         0  anon$$obj.o(Region$$Table)
+    TabSig                                   0x08000254   Data           0  signal.o(Signal)
+    TabCos                                   0x080002d4   Data           0  trigo.o(Trigo)
+    TabSin                                   0x08000354   Data           0  trigo.o(Trigo)
     k                                        0x20000000   Data           4  main.o(.data)
     tab                                      0x20000004   Data         256  main.o(.bss)
     __initial_sp                             0x20000508   Data           0  startup-rvds.o(STACK)
@@ -192,9 +192,9 @@ Memory Map of the image
 
   Image Entry point : 0x08000141
 
-  Load Region LR_1 (Base: 0x08000000, Size: 0x000003dc, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x08000000, Size: 0x000003d8, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000003d8, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000003d4, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -215,25 +215,25 @@ Memory Map of the image
     0x080001be   0x080001be   0x00000002   Code   RO           54    i.__scatterload_null  mc_w.l(handlers.o)
     0x080001c0   0x080001c0   0x0000000e   Code   RO           55    i.__scatterload_zeroinit  mc_w.l(handlers.o)
     0x080001ce   0x080001ce   0x00000002   PAD
-    0x080001d0   0x080001d0   0x00000068   Code   RO           18    moncode             td_sub.o
-    0x08000238   0x08000238   0x00000020   Data   RO           51    Region$$Table       anon$$obj.o
-    0x08000258   0x08000258   0x00000080   Data   RO           24    Signal              signal.o
-    0x080002d8   0x080002d8   0x00000100   Data   RO           23    Trigo               trigo.o
+    0x080001d0   0x080001d0   0x00000064   Code   RO           18    moncode             td_sub.o
+    0x08000234   0x08000234   0x00000020   Data   RO           51    Region$$Table       anon$$obj.o
+    0x08000254   0x08000254   0x00000080   Data   RO           24    Signal              signal.o
+    0x080002d4   0x080002d4   0x00000100   Data   RO           23    Trigo               trigo.o
 
 
-    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x080003d8, Size: 0x00000004, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x080003d4, Size: 0x00000004, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x080003d8   0x00000004   Data   RW            3    .data               main.o
+    0x20000000   0x080003d4   0x00000004   Data   RW            3    .data               main.o
 
 
-    Execution Region ER_ZI (Exec base: 0x20000004, Load base: 0x080003dc, Size: 0x00000504, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Exec base: 0x20000004, Load base: 0x080003d8, Size: 0x00000504, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x20000004        -       0x00000100   Zero   RW            2    .bss                main.o
-    0x20000104   0x080003dc   0x00000004   PAD
+    0x20000104   0x080003d8   0x00000004   PAD
     0x20000108        -       0x00000400   Zero   RW           25    STACK               startup-rvds.o
 
 
@@ -247,11 +247,11 @@ Image component sizes
         64         14          0          4        256       2376   main.o
          0          0        128          0          0          0   signal.o
         76         20        236          0       1024        836   startup-rvds.o
-       104         10          0          0          0        428   td_sub.o
+       100          8          0          0          0        428   td_sub.o
          0          0        256          0          0          0   trigo.o
 
     ----------------------------------------------------------------------
-       244         44        652          4       1284       3640   Object Totals
+       240         42        652          4       1284       3640   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          0          0          0          0          4          0   (incl. Padding)
 
@@ -290,15 +290,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-       332         60        652          4       1284       3808   Grand Totals
-       332         60        652          4       1284       3808   ELF Image Totals
-       332         60        652          4          0          0   ROM Totals
+       328         58        652          4       1284       3808   Grand Totals
+       328         58        652          4       1284       3808   ELF Image Totals
+       328         58        652          4          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                  984 (   0.96kB)
+    Total RO  Size (Code + RO Data)                  980 (   0.96kB)
     Total RW  Size (RW Data + ZI Data)              1288 (   1.26kB)
-    Total ROM Size (Code + RO Data + RW Data)        988 (   0.96kB)
+    Total ROM Size (Code + RO Data + RW Data)        984 (   0.96kB)
 
 ==============================================================================
 
