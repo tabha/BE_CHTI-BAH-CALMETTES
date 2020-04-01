@@ -21,20 +21,21 @@ Target DLL:      UL2CM3.DLL V1.163.0.0
 Dialog DLL:      TARMSTM.DLL V1.66.0.0
  
 <h2>Project:</h2>
-D:\Pierre-rog\Desktop\Be_chti\BE_CHTI-BAH-CALMETTES\partie2_dft\dft partie 2.2\tdm.uvprojx
+D:\Pierre-rog\Desktop\Be_chti\BE_CHTI-BAH-CALMETTES\partie2_dft\dft_partie_2.2\tdm.uvprojx
 Project File Date:  03/25/2020
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
-assembling Trigo.asm...
 assembling Signal.asm...
-assembling td_sub.s...
 assembling startup-rvds.s...
+assembling Trigo.asm...
 compiling main.c...
+assembling td_sub.s...
+td_sub.s(68): warning: A1581W: Added 2 bytes of padding at address 0x5a
 linking...
 Program Size: Code=328 RO-data=652 RW-data=4 ZI-data=1284  
-".\tdm12.axf" - 0 Error(s), 0 Warning(s).
+".\tdm12.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -57,7 +58,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.3.0
-Build Time Elapsed:  00:00:00
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

@@ -1,5 +1,4 @@
 // programme pour calculer la somme des carres d'une suite d'entiers consécutifs
-int calculk(short * tabSig,int k,short * tabCosSin);
 int module(short * tabSig, int k);
 
 extern short TabSig ;

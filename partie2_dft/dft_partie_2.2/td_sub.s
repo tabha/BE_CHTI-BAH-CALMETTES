@@ -1,7 +1,6 @@
 ; ce programme est pour l'assembleur RealView (Keil)
 	thumb
 	area  moncode, code, readonly
-	export	calculk;
 	export	module
 	import 	TabCos
 	import	TabSin
@@ -9,29 +8,20 @@
 
 module	proc
 	push	{lr}
-	push	{r0,r1,r4-r5}
 	;r0 : tabSig    r1: k
 	
 	;appel de calculk avec cos
 	
 	ldr		r2,=TabCos
-	
+	ldr 	r3,=TabSin
 	BL		calculk
-	mov		r3,r0
-	pop		{r0,r1}
-	push	{r3}
-	ldr		r2,=TabSin
+
+;r0 : resultat avec cos    r1 : resultat avec sin
+
 	
-	BL		calculk
-	
-	mov		r2,r0
-	
-	pop		{r3}
-	
-	smull	r5,r4,r3,r3
-	SMLAL	r5,r4,r2,r2
-	mov		r0,r4
-	pop		{r4-r5}
+	smull	r2,r3,r0,r0
+	SMLAL	r2,r3,r1,r1
+	mov		r0,r3
 	pop		{LR}
 	BX		LR
 	endp
@@ -39,8 +29,8 @@ module	proc
 
 calculk	proc
 	
-	; r0 = tabSig    r1 : k   r2 : tabCos ou TaSig
-	push	{r4-r6}
+	; r0 = tabSig    r1 : k   r2 : tabCos r3 : TaSin
+	push	{r4-r8}
 	mov		r12, #0x00  ; i=0
 	b		loop
 	
@@ -49,11 +39,15 @@ loop
 	mul		r5,r1,r12
 	AND		r5, #0x03F   ;modulo 64
 	
-	ldrsh	r4,[r2,r5, lsl #0x01]   ;cos(ik) ou sin(ik)
+	ldrsh	r4,[r2,r5, lsl #0x01]   ;cos(ik)
+	ldrsh	r7,[r3,r5, lsl #0x01]   ;sin(ik)
 	ldrsh	r5,[r0,r12, lsl #0x01]   ;x(i)
 	
 	mul		r4,r4,r5	;cos(ik)x(i) ou sin(ik)x(i)
-
+	
+	mul		r7,r7,r5	;sin(ik)x(i)
+	
+	add		r8,r7
 	add		r6,r4
 	
 	add		r12,#0x01
@@ -64,9 +58,10 @@ loop
 	; on quitte la boucle
 	
 	mov		r0,r6
+	mov		r1,r8
 	b 		fin
 fin
-	pop		{r4-r6}
+	pop		{r4-r8}
 	BX		LR
 	
 	endp

@@ -7,86 +7,79 @@ ARM Macro Assembler    Page 1
     1 00000000         ; ce programme est pour l'assembleur RealView (Keil)
     2 00000000                 thumb
     3 00000000                 area             moncode, code, readonly
-    4 00000000                 export           calculk     ;
-    5 00000000                 export           module
-    6 00000000                 import           TabCos
-    7 00000000                 import           TabSin
+    4 00000000                 export           module
+    5 00000000                 import           TabCos
+    6 00000000                 import           TabSin
+    7 00000000         
     8 00000000         
-    9 00000000         
-   10 00000000         module  proc
-   11 00000000 B500            push             {lr}
-   12 00000002 B433            push             {r0,r1,r4-r5}
-   13 00000004         ;r0 : tabSig    r1: k
-   14 00000004         
-   15 00000004         ;appel de calculk avec cos
-   16 00000004         
-   17 00000004 4A15            ldr              r2,=TabCos
-   18 00000006         
-   19 00000006 F7FF FFFE       BL               calculk
-   20 0000000A 4603            mov              r3,r0
-   21 0000000C BC03            pop              {r0,r1}
-   22 0000000E B408            push             {r3}
-   23 00000010 4A13            ldr              r2,=TabSin
-   24 00000012         
-   25 00000012 F7FF FFFE       BL               calculk
-   26 00000016         
-   27 00000016 4602            mov              r2,r0
-   28 00000018         
-   29 00000018 BC08            pop              {r3}
-   30 0000001A         
-   31 0000001A FB83 5403       smull            r5,r4,r3,r3
-   32 0000001E FBC2 5402       SMLAL            r5,r4,r2,r2
-   33 00000022 4620            mov              r0,r4
-   34 00000024 BC30            pop              {r4-r5}
-   35 00000026 F85D EB04       pop              {LR}
-   36 0000002A 4770            BX               LR
-   37 0000002C                 endp
-   38 0000002C         
-   39 0000002C         
-   40 0000002C         calculk proc
+    9 00000000         module  proc
+   10 00000000 B500            push             {lr}
+   11 00000002         ;r0 : tabSig    r1: k
+   12 00000002         
+   13 00000002         ;appel de calculk avec cos
+   14 00000002         
+   15 00000002 4A16            ldr              r2,=TabCos
+   16 00000004 4B16            ldr              r3,=TabSin
+   17 00000006 F7FF FFFE       BL               calculk
+   18 0000000A         
+   19 0000000A         ;r0 : resultat avec cos    r1 : resultat avec sin
+   20 0000000A         
+   21 0000000A         
+   22 0000000A FB80 2300       smull            r2,r3,r0,r0
+   23 0000000E FBC1 2301       SMLAL            r2,r3,r1,r1
+   24 00000012 4618            mov              r0,r3
+   25 00000014 F85D EB04       pop              {LR}
+   26 00000018 4770            BX               LR
+   27 0000001A                 endp
+   28 0000001A         
+   29 0000001A         
+   30 0000001A         calculk proc
+   31 0000001A         
+   32 0000001A         ; r0 = tabSig    r1 : k   r2 : tabCos r3 : TaSin
+   33 0000001A E92D 01F0       push             {r4-r8}
+   34 0000001E F04F 0C00       mov              r12, #0x00  ; i=0
+   35 00000022 E7FF            b                loop
+   36 00000024         
+   37 00000024         loop
+   38 00000024         ;calcul ik
+   39 00000024 FB01 F50C       mul              r5,r1,r12
+   40 00000028 F005 053F       AND              r5, #0x03F  ;modulo 64
    41 0000002C         
-   42 0000002C         ; r0 = tabSig    r1 : k   r2 : tabCos ou TaSig
-   43 0000002C B470            push             {r4-r6}
-   44 0000002E F04F 0C00       mov              r12, #0x00  ; i=0
-   45 00000032 E7FF            b                loop
-   46 00000034         
-   47 00000034         loop
-   48 00000034         ;calcul ik
-   49 00000034 FB01 F50C       mul              r5,r1,r12
-   50 00000038 F005 053F       AND              r5, #0x03F  ;modulo 64
-   51 0000003C         
-   52 0000003C F932 4015       ldrsh            r4,[r2,r5, lsl #0x01] 
-                                                            ;cos(ik) ou sin(ik)
-                                                            
-   53 00000040 F930 501C       ldrsh            r5,[r0,r12, lsl #0x01] ;x(i)
-   54 00000044         
-   55 00000044 FB04 F405       mul              r4,r4,r5    ;cos(ik)x(i) ou sin
+   42 0000002C F932 4015       ldrsh            r4,[r2,r5, lsl #0x01] ;cos(ik)
+   43 00000030 F933 7015       ldrsh            r7,[r3,r5, lsl #0x01] ;sin(ik)
+   44 00000034 F930 501C       ldrsh            r5,[r0,r12, lsl #0x01] ;x(i)
+   45 00000038         
+   46 00000038 FB04 F405       mul              r4,r4,r5    ;cos(ik)x(i) ou sin
                                                             (ik)x(i)
-   56 00000048         
+   47 0000003C         
+   48 0000003C FB07 F705       mul              r7,r7,r5    ;sin(ik)x(i)
+   49 00000040         
+   50 00000040 44B8            add              r8,r7
+   51 00000042 4426            add              r6,r4
+   52 00000044         
+   53 00000044 F10C 0C01       add              r12,#0x01
+   54 00000048         
+   55 00000048 F1BC 0F40       cmp              r12,#64
+   56 0000004C D1EA            bne              loop
+   57 0000004E         
+   58 0000004E         ; on quitte la boucle
 
 
 
 ARM Macro Assembler    Page 2 
 
 
-   57 00000048 4426            add              r6,r4
-   58 0000004A         
-   59 0000004A F10C 0C01       add              r12,#0x01
-   60 0000004E         
-   61 0000004E F1BC 0F40       cmp              r12,#64
-   62 00000052 D1EF            bne              loop
-   63 00000054         
-   64 00000054         ; on quitte la boucle
-   65 00000054         
-   66 00000054 4630            mov              r0,r6
-   67 00000056 E7FF            b                fin
-   68 00000058         fin
-   69 00000058 BC70            pop              {r4-r6}
-   70 0000005A 4770            BX               LR
-   71 0000005C         
-   72 0000005C                 endp
-   73 0000005C                 end
-              00000000 
+   59 0000004E         
+   60 0000004E 4630            mov              r0,r6
+   61 00000050 4641            mov              r1,r8
+   62 00000052 E7FF            b                fin
+   63 00000054         fin
+   64 00000054 E8BD 01F0       pop              {r4-r8}
+   65 00000058 4770            BX               LR
+   66 0000005A         
+   67 0000005A                 endp
+   68 0000005A                 end
+              00 00 00000000 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\td_sub.d -o.\td_sub.o -I.\RTE\_Target_1 -ID:\Pierre-rog\AppData\
@@ -101,40 +94,38 @@ sub.s
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Relocatable symbols
 
-calculk 0000002C
+calculk 0000001A
 
 Symbol: calculk
    Definitions
-      At line 40 in file td_sub.s
+      At line 30 in file td_sub.s
    Uses
-      At line 4 in file td_sub.s
-      At line 19 in file td_sub.s
-      At line 25 in file td_sub.s
-
-fin 00000058
+      At line 17 in file td_sub.s
+Comment: calculk used once
+fin 00000054
 
 Symbol: fin
    Definitions
-      At line 68 in file td_sub.s
+      At line 63 in file td_sub.s
    Uses
-      At line 67 in file td_sub.s
+      At line 62 in file td_sub.s
 Comment: fin used once
-loop 00000034
+loop 00000024
 
 Symbol: loop
    Definitions
-      At line 47 in file td_sub.s
+      At line 37 in file td_sub.s
    Uses
-      At line 45 in file td_sub.s
-      At line 62 in file td_sub.s
+      At line 35 in file td_sub.s
+      At line 56 in file td_sub.s
 
 module 00000000
 
 Symbol: module
    Definitions
-      At line 10 in file td_sub.s
+      At line 9 in file td_sub.s
    Uses
-      At line 5 in file td_sub.s
+      At line 4 in file td_sub.s
 Comment: module used once
 moncode 00000000
 
@@ -155,17 +146,17 @@ TabCos 00000000
 
 Symbol: TabCos
    Definitions
-      At line 6 in file td_sub.s
+      At line 5 in file td_sub.s
    Uses
-      At line 17 in file td_sub.s
+      At line 15 in file td_sub.s
 Comment: TabCos used once
 TabSin 00000000
 
 Symbol: TabSin
    Definitions
-      At line 7 in file td_sub.s
+      At line 6 in file td_sub.s
    Uses
-      At line 23 in file td_sub.s
+      At line 16 in file td_sub.s
 Comment: TabSin used once
 2 symbols
 344 symbols in table
