@@ -1,0 +1,4 @@
+Km = 2^30        car somme en 2.30
+Ka = 2^12/3.3
+Ks = 2^27        car en 5.27
+Kt = 32768
