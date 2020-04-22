@@ -420,6 +420,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>Lib</GroupName>
+          <Files>
+            <File>
+              <FileName>gfssp72.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>.\gfssp72.lib</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
       </Groups>

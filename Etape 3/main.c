@@ -1,27 +1,37 @@
 #include "gassp72.h"
 
+int module(unsigned short * tabSig, int k);
 
+unsigned short int dma_buf[64];
 
-
-int module(short * tabSig, int k);
-
-extern short TabSig ;
-
-int k = 0;
-int tab[64];
-
-
-
-void callBack(void){
+int compteurOccurence[6];
 	
+int M2TIR = 985507 ;
+
+
+void sys_callback(void){
+	int k ;
+	GPIO_Set(GPIOB,1);
 	
 	// Démarrage DMA pour 64 points
 	Start_DMA1(64);
 	Wait_On_End_Of_DMA1();
 	Stop_DMA1;
 	
-	
-	
+	for (int i = 0; i<6;i++){
+		
+		k = i+17 ;
+		if (i>3){
+			k+=2 ;
+		}
+		
+		if (module(dma_buf,k)>= M2TIR){
+			compteurOccurence[i] += 1 ;
+		} else {
+			compteurOccurence[i] = 0 ;
+		}
+	}	
+	GPIO_Clear(GPIOB,1);
 }
 
 
@@ -37,7 +47,7 @@ int main(void){
 	GPIO_Configure(GPIOB, 14, OUTPUT, OUTPUT_PPULL);
 
 	// activation ADC, sampling time 1us
-	Init_TimingADC_ActiveADC_ff( ADC1, 72 );
+	Init_TimingADC_ActiveADC_ff( ADC1, 0x52 );
 	Single_Channel_ADC( ADC1, 2 );
 	// Déclenchement ADC par timer2, periode (72MHz/320kHz)ticks
 	Init_Conversion_On_Trig_Timer_ff( ADC1, TIM2_CC2, 225 );
@@ -45,20 +55,18 @@ int main(void){
 	Init_ADC1_DMA1( 0, dma_buf );
 
 	// Config Timer, période exprimée en périodes horloge CPU (72 MHz)
-	Systick_Period_ff( SYSTICK_PER );
+	Systick_Period_ff( 5000*72 );
 	// enregistrement de la fonction de traitement de l'interruption timer
 	// ici le 3 est la priorité, sys_callback est l'adresse de cette fonction, a créér en C
 	Systick_Prio_IT( 3, sys_callback );
 	SysTick_On;
 	SysTick_Enable_IT;
 	
+
 	
 	
-	
-	
-	for (k=0 ; k<64; k++){
-			tab[k]=module(&TabSig,k);
-	}
 
 	while (1) {}
+
+
 }
