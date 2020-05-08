@@ -402,11 +402,6 @@
               <FileType>2</FileType>
               <FilePath>.\Matlab\Trigo.asm</FilePath>
             </File>
-            <File>
-              <FileName>Signal.asm</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\Matlab\Signal.asm</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

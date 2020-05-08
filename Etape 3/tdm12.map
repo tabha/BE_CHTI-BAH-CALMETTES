@@ -136,7 +136,6 @@ Removing Unused input sections from the image.
     Removing main.o(.rev16_text), (4 bytes).
     Removing main.o(.revsh_text), (4 bytes).
     Removing main.o(.rrx_text), (6 bytes).
-    Removing signal.o(Signal), (128 bytes).
     Removing startup-rvds.o(HEAP), (512 bytes).
     Removing clock.o(.rev16_text), (4 bytes).
     Removing clock.o(.revsh_text), (4 bytes).
@@ -179,7 +178,7 @@ Removing Unused input sections from the image.
     Removing fepilogue.o(.text), (110 bytes).
     Removing depilogue.o(.text), (186 bytes).
 
-45 unused section(s) (total 4436 bytes) removed from the image.
+44 unused section(s) (total 4308 bytes) removed from the image.
 
 ==============================================================================
 
@@ -189,22 +188,22 @@ Image Symbol Table
 
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
-    ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
     ../clib/microlib/stubs.s                 0x00000000   Number         0  iusefp.o ABSOLUTE
     ../fplib/microlib/d2f.c                  0x00000000   Number         0  d2f.o ABSOLUTE
     ../fplib/microlib/f2d.c                  0x00000000   Number         0  f2d.o ABSOLUTE
@@ -213,12 +212,12 @@ Image Symbol Table
     ../fplib/microlib/fpdiv.c                0x00000000   Number         0  ddiv.o ABSOLUTE
     ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  fepilogue.o ABSOLUTE
     ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  depilogue.o ABSOLUTE
-    ../fplib/microlib/fpfix.c                0x00000000   Number         0  ffixui.o ABSOLUTE
     ../fplib/microlib/fpfix.c                0x00000000   Number         0  ffixi.o ABSOLUTE
+    ../fplib/microlib/fpfix.c                0x00000000   Number         0  ffixui.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  dfltui.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  ffltui.o ABSOLUTE
-    ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
     ../fplib/microlib/fpmul.c                0x00000000   Number         0  fmul.o ABSOLUTE
+    ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
     ../fplib/microlib/fpscalb.c              0x00000000   Number         0  fscalb.o ABSOLUTE
     Lib\ADC_FAKE.c                           0x00000000   Number         0  adc_fake.o ABSOLUTE
     Lib\GPIO.c                               0x00000000   Number         0  gpio.o ABSOLUTE
@@ -231,7 +230,6 @@ Image Symbol Table
     Lib\\clock.c                             0x00000000   Number         0  clock.o ABSOLUTE
     Lib\clock.c                              0x00000000   Number         0  clock.o ABSOLUTE
     Lib\libcos.asm                           0x00000000   Number         0  libcos.o ABSOLUTE
-    Matlab\Signal.asm                        0x00000000   Number         0  signal.o ABSOLUTE
     Matlab\Trigo.asm                         0x00000000   Number         0  trigo.o ABSOLUTE
     Sys\startup-rvds.s                       0x00000000   Number         0  startup-rvds.o ABSOLUTE
     dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
@@ -464,51 +462,51 @@ Memory Map of the image
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x08000000   0x08000000   0x000000ec   Data   RO           69    RESET               startup-rvds.o
-    0x080000ec   0x080000ec   0x00000000   Code   RO          176  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x080000ec   0x080000ec   0x00000004   Code   RO          203    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x080000f0   0x080000f0   0x00000004   Code   RO          206    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x080000f4   0x080000f4   0x00000000   Code   RO          208    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x080000f4   0x080000f4   0x00000000   Code   RO          210    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x080000f4   0x080000f4   0x00000008   Code   RO          211    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x080000fc   0x080000fc   0x00000000   Code   RO          213    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x080000fc   0x080000fc   0x00000000   Code   RO          215    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x080000fc   0x080000fc   0x00000004   Code   RO          204    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x08000000   0x08000000   0x000000ec   Data   RO           68    RESET               startup-rvds.o
+    0x080000ec   0x080000ec   0x00000000   Code   RO          175  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x080000ec   0x080000ec   0x00000004   Code   RO          202    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x080000f0   0x080000f0   0x00000004   Code   RO          205    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x080000f4   0x080000f4   0x00000000   Code   RO          207    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x080000f4   0x080000f4   0x00000000   Code   RO          209    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x080000f4   0x080000f4   0x00000008   Code   RO          210    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x080000fc   0x080000fc   0x00000000   Code   RO          212    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x080000fc   0x080000fc   0x00000000   Code   RO          214    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x080000fc   0x080000fc   0x00000004   Code   RO          203    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
     0x08000100   0x08000100   0x00000100   Code   RO            4    .text               main.o
-    0x08000200   0x08000200   0x0000004c   Code   RO           70  * .text               startup-rvds.o
-    0x0800024c   0x0800024c   0x00000024   Code   RO          226    .text               mc_w.l(init.o)
-    0x08000270   0x08000270   0x000000e4   Code   RO          142    i.Active_IT_Debordement_Timer  gfssp72.lib(timer_1234.o)
-    0x08000354   0x08000354   0x00000074   Code   RO           77    i.CLOCK_Configure   gfssp72.lib(clock.o)
-    0x080003c8   0x080003c8   0x00000008   Code   RO           78    i.CLOCK_GetADCCLK   gfssp72.lib(clock.o)
-    0x080003d0   0x080003d0   0x00000008   Code   RO           79    i.CLOCK_GetHCLK     gfssp72.lib(clock.o)
-    0x080003d8   0x080003d8   0x00000024   Code   RO           82    i.CLOCK_GetTIMCLK   gfssp72.lib(clock.o)
-    0x080003fc   0x080003fc   0x00000074   Code   RO           83    i.CLOCK_HPRECompute  gfssp72.lib(clock.o)
-    0x08000470   0x08000470   0x00000108   Code   RO           97    i.GPIO_Configure    gfssp72.lib(gpio.o)
-    0x08000578   0x08000578   0x0000002c   Code   RO          120    i.Init_ADC1_DMA1    gfssp72.lib(adc_fake.o)
-    0x080005a4   0x080005a4   0x00000078   Code   RO          121    i.Init_Conversion_On_Trig_Timer_ff  gfssp72.lib(adc_fake.o)
-    0x0800061c   0x0800061c   0x000000ec   Code   RO          122    i.Init_TimingADC_ActiveADC_ff  gfssp72.lib(adc_fake.o)
-    0x08000708   0x08000708   0x00000002   Code   RO          123    i.Single_Channel_ADC  gfssp72.lib(adc_fake.o)
+    0x08000200   0x08000200   0x0000004c   Code   RO           69  * .text               startup-rvds.o
+    0x0800024c   0x0800024c   0x00000024   Code   RO          225    .text               mc_w.l(init.o)
+    0x08000270   0x08000270   0x000000e4   Code   RO          141    i.Active_IT_Debordement_Timer  gfssp72.lib(timer_1234.o)
+    0x08000354   0x08000354   0x00000074   Code   RO           76    i.CLOCK_Configure   gfssp72.lib(clock.o)
+    0x080003c8   0x080003c8   0x00000008   Code   RO           77    i.CLOCK_GetADCCLK   gfssp72.lib(clock.o)
+    0x080003d0   0x080003d0   0x00000008   Code   RO           78    i.CLOCK_GetHCLK     gfssp72.lib(clock.o)
+    0x080003d8   0x080003d8   0x00000024   Code   RO           81    i.CLOCK_GetTIMCLK   gfssp72.lib(clock.o)
+    0x080003fc   0x080003fc   0x00000074   Code   RO           82    i.CLOCK_HPRECompute  gfssp72.lib(clock.o)
+    0x08000470   0x08000470   0x00000108   Code   RO           96    i.GPIO_Configure    gfssp72.lib(gpio.o)
+    0x08000578   0x08000578   0x0000002c   Code   RO          119    i.Init_ADC1_DMA1    gfssp72.lib(adc_fake.o)
+    0x080005a4   0x080005a4   0x00000078   Code   RO          120    i.Init_Conversion_On_Trig_Timer_ff  gfssp72.lib(adc_fake.o)
+    0x0800061c   0x0800061c   0x000000ec   Code   RO          121    i.Init_TimingADC_ActiveADC_ff  gfssp72.lib(adc_fake.o)
+    0x08000708   0x08000708   0x00000002   Code   RO          122    i.Single_Channel_ADC  gfssp72.lib(adc_fake.o)
     0x0800070a   0x0800070a   0x00000002   PAD
-    0x0800070c   0x0800070c   0x00000048   Code   RO          124    i.Start_DMA1        gfssp72.lib(adc_fake.o)
-    0x08000754   0x08000754   0x0000000c   Code   RO          105    i.SysTick_Handler   gfssp72.lib(timer_systick.o)
-    0x08000760   0x08000760   0x00000022   Code   RO          107    i.Systick_Period_ff  gfssp72.lib(timer_systick.o)
+    0x0800070c   0x0800070c   0x00000048   Code   RO          123    i.Start_DMA1        gfssp72.lib(adc_fake.o)
+    0x08000754   0x08000754   0x0000000c   Code   RO          104    i.SysTick_Handler   gfssp72.lib(timer_systick.o)
+    0x08000760   0x08000760   0x00000022   Code   RO          106    i.Systick_Period_ff  gfssp72.lib(timer_systick.o)
     0x08000782   0x08000782   0x00000002   PAD
-    0x08000784   0x08000784   0x00000014   Code   RO          108    i.Systick_Prio_IT   gfssp72.lib(timer_systick.o)
-    0x08000798   0x08000798   0x0000010c   Code   RO          148    i.TIM1_CC_IRQHandler  gfssp72.lib(timer_1234.o)
-    0x080008a4   0x080008a4   0x00000018   Code   RO          149    i.TIM1_UP_IRQHandler  gfssp72.lib(timer_1234.o)
-    0x080008bc   0x080008bc   0x00000110   Code   RO          150    i.TIM2_IRQHandler   gfssp72.lib(timer_1234.o)
-    0x080009cc   0x080009cc   0x0000012c   Code   RO          151    i.TIM3_IRQHandler   gfssp72.lib(timer_1234.o)
-    0x08000af8   0x08000af8   0x0000012c   Code   RO          152    i.TIM4_IRQHandler   gfssp72.lib(timer_1234.o)
-    0x08000c24   0x08000c24   0x0000007c   Code   RO          154    i.Timer_1234_Init_ff  gfssp72.lib(timer_1234.o)
-    0x08000ca0   0x08000ca0   0x0000014c   Code   RO          125    i.Wait_On_End_Of_DMA1  gfssp72.lib(adc_fake.o)
-    0x08000dec   0x08000dec   0x0000000e   Code   RO          232    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x08000dfa   0x08000dfa   0x00000002   Code   RO          233    i.__scatterload_null  mc_w.l(handlers.o)
-    0x08000dfc   0x08000dfc   0x0000000e   Code   RO          234    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x08000784   0x08000784   0x00000014   Code   RO          107    i.Systick_Prio_IT   gfssp72.lib(timer_systick.o)
+    0x08000798   0x08000798   0x0000010c   Code   RO          147    i.TIM1_CC_IRQHandler  gfssp72.lib(timer_1234.o)
+    0x080008a4   0x080008a4   0x00000018   Code   RO          148    i.TIM1_UP_IRQHandler  gfssp72.lib(timer_1234.o)
+    0x080008bc   0x080008bc   0x00000110   Code   RO          149    i.TIM2_IRQHandler   gfssp72.lib(timer_1234.o)
+    0x080009cc   0x080009cc   0x0000012c   Code   RO          150    i.TIM3_IRQHandler   gfssp72.lib(timer_1234.o)
+    0x08000af8   0x08000af8   0x0000012c   Code   RO          151    i.TIM4_IRQHandler   gfssp72.lib(timer_1234.o)
+    0x08000c24   0x08000c24   0x0000007c   Code   RO          153    i.Timer_1234_Init_ff  gfssp72.lib(timer_1234.o)
+    0x08000ca0   0x08000ca0   0x0000014c   Code   RO          124    i.Wait_On_End_Of_DMA1  gfssp72.lib(adc_fake.o)
+    0x08000dec   0x08000dec   0x0000000e   Code   RO          231    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x08000dfa   0x08000dfa   0x00000002   Code   RO          232    i.__scatterload_null  mc_w.l(handlers.o)
+    0x08000dfc   0x08000dfc   0x0000000e   Code   RO          233    i.__scatterload_zeroinit  mc_w.l(handlers.o)
     0x08000e0a   0x08000e0a   0x00000002   PAD
-    0x08000e0c   0x08000e0c   0x0000001c   Code   RO          126    i.fake_timer_callback  gfssp72.lib(adc_fake.o)
+    0x08000e0c   0x08000e0c   0x0000001c   Code   RO          125    i.fake_timer_callback  gfssp72.lib(adc_fake.o)
     0x08000e28   0x08000e28   0x00000064   Code   RO           61    moncode             td_sub.o
-    0x08000e8c   0x08000e8c   0x00000100   Data   RO          175    FakeTab             gfssp72.lib(libcos.o)
-    0x08000f8c   0x08000f8c   0x00000020   Data   RO          230    Region$$Table       anon$$obj.o
+    0x08000e8c   0x08000e8c   0x00000100   Data   RO          174    FakeTab             gfssp72.lib(libcos.o)
+    0x08000f8c   0x08000f8c   0x00000020   Data   RO          229    Region$$Table       anon$$obj.o
     0x08000fac   0x08000fac   0x00000100   Data   RO           65    Trigo               trigo.o
 
 
@@ -517,8 +515,8 @@ Memory Map of the image
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x20000000   0x080010ac   0x00000004   Data   RW            6    .data               main.o
-    0x20000004   0x080010b0   0x00000004   Data   RW          109    .data               gfssp72.lib(timer_systick.o)
-    0x20000008   0x080010b4   0x000000a0   Data   RW          156    .data               gfssp72.lib(timer_1234.o)
+    0x20000004   0x080010b0   0x00000004   Data   RW          108    .data               gfssp72.lib(timer_systick.o)
+    0x20000008   0x080010b4   0x000000a0   Data   RW          155    .data               gfssp72.lib(timer_1234.o)
 
 
     Execution Region ER_ZI (Exec base: 0x200000a8, Load base: 0x08001154, Size: 0x000004f0, Max: 0xffffffff, ABSOLUTE)
@@ -526,9 +524,9 @@ Memory Map of the image
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x200000a8        -       0x00000098   Zero   RW            5    .bss                main.o
-    0x20000140        -       0x00000054   Zero   RW          127    .bss                gfssp72.lib(adc_fake.o)
+    0x20000140        -       0x00000054   Zero   RW          126    .bss                gfssp72.lib(adc_fake.o)
     0x20000194   0x08001154   0x00000004   PAD
-    0x20000198        -       0x00000400   Zero   RW           67    STACK               startup-rvds.o
+    0x20000198        -       0x00000400   Zero   RW           66    STACK               startup-rvds.o
 
 
 ==============================================================================
